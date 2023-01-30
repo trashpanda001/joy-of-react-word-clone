@@ -2,7 +2,8 @@ import React from "react";
 
 import { WORDS } from "../../data";
 import { sample } from "../../utils";
-import Banner from "../Banner";
+import WinBanner from "../WinBanner";
+import LoseBanner from "../LoseBanner";
 import GuessInput from "../GuessInput";
 import GuessResults from "../GuessResults";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
@@ -30,7 +31,8 @@ function Game() {
     <>
       <GuessResults guesses={guesses} answer={answer} />
       <GuessInput addGuess={addGuess} disabled={state !== "playing"} />
-      <Banner state={state} guessCount={guesses.length} answer={answer} />
+      {state === "win" && <WinBanner guessCount={guesses.length} />}
+      {state === "lose" && <LoseBanner answer={answer} />}
     </>
   );
 }
