@@ -142,6 +142,20 @@ h1 {
   border-color: var(--color-warning);
   color: white;
 }
+
+.restart {
+  display: flex;
+  margin-top: 16px;
+  justify-content: center;
+}
+.restart-button {
+  padding: 8px;
+  color: var(--color-gray-300);
+  background: var(--color-gray-900);
+  border-color: var(--color-gray-300);
+  border-radius: 8px;
+}
+
 /*
   Round the corners for the 4 cells at the very corners of
   the game board
