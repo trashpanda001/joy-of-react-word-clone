@@ -11,16 +11,37 @@ import WinBanner from "../WinBanner";
 
 function Game() {
   const [answer, setAnswer] = React.useState(() => sample(WORDS));
-  console.info({ answer });
   const [guesses, setGuesses] = React.useState([]);
+  const [inputValue, setInputValue] = React.useState("");
+  console.info({ answer });
 
   function addGuess(guess) {
     setGuesses([...guesses, { id: Math.random(), word: guess }]);
+    setInputValue("");
   }
 
   function handleRestart() {
     setAnswer(sample(WORDS));
     setGuesses([]);
+  }
+
+  function handleLetterClick(letter) {
+    const length = inputValue.length;
+    if (letter === "⌫") {
+      if (length >= 1) {
+        setInputValue(inputValue.slice(0, length - 1));
+      }
+      return;
+    }
+    if (letter === "↵") {
+      if (length === 5) {
+        addGuess(inputValue);
+      }
+      return;
+    }
+    if (length < 5) {
+      setInputValue(inputValue + letter);
+    }
   }
 
   const state =
@@ -33,8 +54,17 @@ function Game() {
   return (
     <>
       <GuessResults guesses={guesses} answer={answer} />
-      <GuessInput addGuess={addGuess} disabled={state !== "playing"} />
-      <Keyboard guesses={guesses} answer={answer} />
+      <GuessInput
+        addGuess={addGuess}
+        value={inputValue}
+        setValue={setInputValue}
+        disabled={state !== "playing"}
+      />
+      <Keyboard
+        guesses={guesses}
+        answer={answer}
+        onLetterClick={handleLetterClick}
+      />
       {state === "win" && (
         <WinBanner guessCount={guesses.length} onRestart={handleRestart} />
       )}

@@ -1,7 +1,7 @@
 import React from "react";
 import { checkGuess } from "../../game-helpers";
 
-function Keyboard({ guesses, answer }) {
+function Keyboard({ guesses, answer, onLetterClick }) {
   const used = guesses.map((guess) => guess.word).join("");
   const check = checkGuess(guesses.at(-1)?.word, answer);
 
@@ -16,7 +16,7 @@ function Keyboard({ guesses, answer }) {
   const layout = [
     "QWERTYUIOP".split(""),
     "ASDFGHJKL".split(""),
-    "ZXCVBNM".split(""),
+    "↵ZXCVBNM⌫".split(""),
   ];
 
   return (
@@ -24,12 +24,13 @@ function Keyboard({ guesses, answer }) {
       {layout.map((row, index) => (
         <p key={index} className="keyboard-row">
           {row.map((letter) => (
-            <span
+            <button
               key={letter}
               className={`keyboard-key ${letterStatus(letter)}`}
+              onClick={() => onLetterClick(letter)}
             >
               {letter}
-            </span>
+            </button>
           ))}
         </p>
       ))}
