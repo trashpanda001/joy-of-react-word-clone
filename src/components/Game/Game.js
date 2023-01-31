@@ -1,12 +1,13 @@
 import React from "react";
 
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import { WORDS } from "../../data";
 import { sample } from "../../utils";
-import WinBanner from "../WinBanner";
-import LoseBanner from "../LoseBanner";
 import GuessInput from "../GuessInput";
 import GuessResults from "../GuessResults";
-import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
+import Keyboard from "../Keyboard";
+import LoseBanner from "../LoseBanner";
+import WinBanner from "../WinBanner";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -31,6 +32,7 @@ function Game() {
     <>
       <GuessResults guesses={guesses} answer={answer} />
       <GuessInput addGuess={addGuess} disabled={state !== "playing"} />
+      <Keyboard guesses={guesses} answer={answer} />
       {state === "win" && <WinBanner guessCount={guesses.length} />}
       {state === "lose" && <LoseBanner answer={answer} />}
     </>
